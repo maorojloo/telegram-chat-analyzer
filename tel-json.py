@@ -32,36 +32,40 @@ hpcount=0
 
 print('please w8 ...')
 for msg in messages:
-    txt=msg["text"]
     
-    #if txt=="هعپ":
-    if re.search(q,str(txt) ):
-        
-        rawtxt =msg["date"]
-        xx = re.findall("^(\d\d\d\d-\d\d-\d\d)", rawtxt)
-        x=xx[0]
-        if x in hp_dict:
-            x_count=hp_dict.get(x)
-            x_count=x_count+1
-            hp_dict.update({x: x_count}) 
-        else:
-            hp_dict.update({x: 1}) 
-        #print(txt+"=====>"+x[0])
-        hpcount=1+hpcount
+    if msg["type"] == 'unsupported':
+        print('unsupported')
     else:
+        txt=msg["text"]
         
-        rawtxt =msg["date"]
-        xx = re.findall("^(\d\d\d\d-\d\d-\d\d)", rawtxt)
-        x=xx[0]
-        if x in hp_dict:
-            pass
+        #if txt=="هعپ":
+        if re.search(q,str(txt) ):
+            
+            rawtxt =msg["date"]
+            xx = re.findall("^(\d\d\d\d-\d\d-\d\d)", rawtxt)
+            x=xx[0]
+            if x in hp_dict:
+                x_count=hp_dict.get(x)
+                x_count=x_count+1
+                hp_dict.update({x: x_count}) 
+            else:
+                hp_dict.update({x: 1}) 
+            #print(txt+"=====>"+x[0])
+            hpcount=1+hpcount
         else:
-            try:
-                hp_dict.update({x: 0}) 
-                #print(txt+"=====>"+x[0])
-            except:
-                print(e)
-        
+            
+            rawtxt =msg["date"]
+            xx = re.findall("^(\d\d\d\d-\d\d-\d\d)", rawtxt)
+            x=xx[0]
+            if x in hp_dict:
+                pass
+            else:
+                try:
+                    hp_dict.update({x: 0}) 
+                    #print(txt+"=====>"+x[0])
+                except:
+                    print(e)
+            
         
 
 
