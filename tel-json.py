@@ -16,10 +16,10 @@ q=input('tel me a word :) =>')
 hp_dict =	{}
 
 
-with open('result.json', 'r', errors='ignore') as myfile:   
+with open('tel_files/result.json', 'r', errors='ignore') as myfile:   
     
     data=myfile.read()
-    dataaa= json.load(codecs.open('result.json' , 'r' , 'utf8'))
+    dataaa= json.load(codecs.open('tel_files/result.json' , 'r' , 'utf8'))
 
 obj = json.loads(data)
 
