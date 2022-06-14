@@ -38,7 +38,7 @@ for msg in messages:
     else:
         txt=msg["text"]
         
-        #if txt=="هعپ":
+       
         if re.search(q,str(txt) ):
             
             rawtxt =msg["date"]
