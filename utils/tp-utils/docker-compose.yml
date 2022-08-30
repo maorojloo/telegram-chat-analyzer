@@ -1,0 +1,69 @@
+version: '3.3'
+
+services:
+  elasticsearch:
+    restart: always
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+      - type: volume
+        source: elasticsearch_data
+        target: /usr/share/elasticsearch/data
+      - type: volume
+        source: es_backup
+        target: /mnt/backups
+        #read_only: false
+    #command: chown -R elasticsearch:elasticsearch /mnt/backups
+    ports:
+      - "9208:9200"
+      - "9308:9300"
+    environment:
+      # TODO: Change these parameters
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      ELASTIC_PASSWORD: PASSWORD
+      discovery.type: single-node
+    networks:
+      - tgp
+
+      
+    logging:
+      driver: "json-file"
+      options:
+       max-file: "10"
+       max-size: "50m"
+  kibana:
+    restart: always
+    build:
+      context: kibana/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    volumes:
+      - type: bind
+        source: ./kibana/config/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
+    ports:
+      - "5608:5601"
+    networks:
+      - tgp
+    depends_on:
+      - elasticsearch
+    logging:
+      driver: "json-file"
+      options:
+       max-file: "10"
+       max-size: "50m"
+
+networks:
+  tgp:
+    driver: bridge
+
+volumes:
+  elasticsearch_data:
+  es_backup:
