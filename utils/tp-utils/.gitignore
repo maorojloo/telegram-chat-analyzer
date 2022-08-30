@@ -1,0 +1,7 @@
+*.pyc
+
+elasticsearch/scripts/venv
+elasticsearch/scripts/env
+elasticsearch/scripts/.idea
+elasticsearch/scripts/__pycache__
+
